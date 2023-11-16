@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="/layout :: head">
+    <meta charset="UTF-8">
+    <title>ListCustomer</title>
+</head>
+<body>
+<h3>Customers</h3>
+<p>
+    <button><a th:href="@{/customers/create}">
+        ACN
+    </a></button>
+</p>
+<div class="notify">
+    <div th:if="${success}">
+        <span th:text="${success}"></span>
+    </div>
+</div>
+<div>
+    <form action="/customers/search">
+        <input type="text" name="q" placeholder="Tìm Kiếm">
+        <button type="submit">Tìm</button>
+    </form>
+</div>
+<table id = "customers">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Image</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>View</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row,rowStat : ${customers}">
+        <td th:text="${row.getName()}"></td>
+        <td th:text="${row.getEmail()}"></td>
+        <td th:text="${row.getAddress()}"></td>
+        <td><img th:src="@{'/static/image/' + ${row.getImage()}}" style="width: 100px;height: 100px" alt=""/></td>
+        <td><a th:href="@{/customers/{id}/edit(id=${row.getId()})}">edit</a></td>
+        <td><button><a th:href="@{/customers/{id}/delete(id=${row.getId()})}">delete</a></button></td>
+        <td><a th:href="@{/customers/{id}/view(id=${row.getId()})}">view</a></td>
+    </tr>
+    </tbody>
+</table>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>
